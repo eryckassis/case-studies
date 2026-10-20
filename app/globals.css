@@ -1,8 +1,18 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #f8f8f8;
+  --foreground: #111111;
+  --selection-background: rgb(68 48 0 / 20%);
+
+  --layout-colums: 6;
+  --layout-gap: 8px;
+  --page-gutter: 8px;
+  --header-hight: 40px;
+}
+
+@theme {
+  --breakpoint-desktop: 64.0625rem;
 }
 
 @theme inline {
@@ -12,15 +22,45 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
+@media (min-width: 48rem) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --page-gutter: 16px;
+    --header-height: 56px;
   }
 }
 
+@media (min-width: 64.0625rem) {
+  :root {
+    --layout-columns: 14;
+    --header-height: 84px;
+  }
+}
+
+html {
+  min-height: 100%;
+  overflow-x: hidden;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+}
+
 body {
+  min-height: 100%;
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.3;
+}
+
+@media (min-width: 89.875rem) {
+  body {
+    font-size: 1.11vw;
+  }
+}
+
+::selection {
+  background: var(--selection-background);
+  color: var(--foreground);
 }
