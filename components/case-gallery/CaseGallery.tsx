@@ -2,7 +2,13 @@
 
 import { useEffect, useRef } from "react";
 import Lenis from "lenis";
-import { cancelFrame, frame } from "framer-motion";
+import {
+  cancelFrame,
+  frame,
+  useMotionValue,
+  useReducedMotion,
+  useSpring,
+} from "framer-motion";
 
 import type { CaseGalleryProps } from "@/types";
 
@@ -12,6 +18,16 @@ export function CaseGallery({ items }: CaseGalleryProps) {
   const wrapperRef = useRef<HTMLElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const sequenceRef = useRef<HTMLDivElement>(null);
+
+  const cardScaleTarget = useMotionValue(1);
+  const cardScale = useSpring(cardScaleTarget, {
+    stiffness: 180,
+    damping: 28,
+    mass: 0.4,
+    restDelta: 0.001,
+  });
+
+  const shouldReduceMotion = useReducedMotion();
 
   useEffect(() => {
     const wrapper = wrapperRef.current;
@@ -28,10 +44,13 @@ export function CaseGallery({ items }: CaseGalleryProps) {
 
     function updateLoopSize(scroll?: Lenis) {
       const styles = window.getComputedStyle(scrollWrapper);
+
       const horizontalPadding =
         Number.parseFloat(styles.paddingLeft) +
         Number.parseFloat(styles.paddingRight);
+
       const viewportWidth = scrollWrapper.clientWidth - horizontalPadding;
+
       const loopWidth = loopSequence.getBoundingClientRect().width;
 
       scrollContent.style.width = `${loopWidth + viewportWidth}px`;
@@ -48,14 +67,32 @@ export function CaseGallery({ items }: CaseGalleryProps) {
       infinite: true,
       smoothWheel: true,
       syncTouch: true,
-      lerp: 0.075,
+
+      lerp: 0.06,
+      wheelMultiplier: 0.85,
+
       autoRaf: false,
       autoResize: true,
       overscroll: false,
       respectReducedMotion: true,
     });
 
-    const resizeObserver = new ResizeObserver(() => updateLoopSize(lenis));
+    function updateCardScale(scroll: Lenis) {
+      if (shouldReduceMotion) {
+        cardScaleTarget.set(1);
+        return;
+      }
+
+      const velocityStrength = Math.min(Math.abs(scroll.velocity) / 22, 1);
+
+      cardScaleTarget.set(1 - velocityStrength * 0.07);
+    }
+
+    lenis.on("scroll", updateCardScale);
+
+    const resizeObserver = new ResizeObserver(() => {
+      updateLoopSize(lenis);
+    });
 
     resizeObserver.observe(scrollWrapper);
     resizeObserver.observe(loopSequence);
@@ -67,11 +104,13 @@ export function CaseGallery({ items }: CaseGalleryProps) {
     frame.update(update, true);
 
     return () => {
+      lenis.off("scroll", updateCardScale);
       resizeObserver.disconnect();
       cancelFrame(update);
+      cardScaleTarget.set(1);
       lenis.destroy();
     };
-  }, []);
+  }, [cardScaleTarget, shouldReduceMotion]);
 
   return (
     <section
@@ -98,12 +137,16 @@ export function CaseGallery({ items }: CaseGalleryProps) {
         <div className="absolute bottom-0 left-0 flex">
           <div
             ref={sequenceRef}
-            className="flex shrink-0 gap-(--case-gallery-gap) pr-(--case-gallery-gap)"
+            className="
+              flex shrink-0 gap-(--case-gallery-gap)
+              pr-(--case-gallery-gap)
+            "
           >
             {items.map((caseStudy, index) => (
               <CaseCard
                 key={caseStudy.id}
                 caseStudy={caseStudy}
+                scrollScale={cardScale}
                 preload={index === 0}
               />
             ))}
@@ -111,13 +154,17 @@ export function CaseGallery({ items }: CaseGalleryProps) {
 
           <div
             aria-hidden="true"
-            inert
-            className="flex shrink-0 gap-(--case-gallery-gap) pr-(--case-gallery-gap)"
+            className="
+              flex shrink-0 gap-(--case-gallery-gap)
+              pr-(--case-gallery-gap)
+            "
           >
             {items.map((caseStudy) => (
               <CaseCard
                 key={`loop-${caseStudy.id}`}
                 caseStudy={caseStudy}
+                scrollScale={cardScale}
+                duplicate
               />
             ))}
           </div>

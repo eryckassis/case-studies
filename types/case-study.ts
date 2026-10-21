@@ -1,3 +1,7 @@
+import type { useAnimationControls, MotionValue } from "framer-motion";
+
+type CaseTitleAnimationControls = ReturnType<typeof useAnimationControls>;
+
 export type CaseStudyImage = Readonly<{
   src: string;
   alt: string;
@@ -16,7 +20,14 @@ export type CaseGalleryProps = Readonly<{
 
 export type CaseCardProps = Readonly<{
   caseStudy: CaseStudy;
+  scrollScale: MotionValue<number>;
   preload?: boolean;
+  duplicate?: boolean;
+}>;
+
+export type AnimatedCaseTitleProps = Readonly<{
+  title: string;
+  controls: CaseTitleAnimationControls;
 }>;
 
 export type CaseCardMediaProps = Readonly<

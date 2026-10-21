@@ -11,4 +11,5 @@ export type {
   CaseGalleryProps,
   CaseStudy,
   CaseStudyImage,
+  AnimatedCaseTitleProps,
 } from "./case-study";

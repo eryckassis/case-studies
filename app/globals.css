@@ -5,6 +5,9 @@
   --foreground: #111111;
   --selection-background: rgb(68 48 0 / 20%);
 
+  --grain-opacity: 0.035;
+  --grain-size: 480px 360px;
+
   --layout-columns: 6;
   --layout-gap: 8px;
   --page-gutter: 8px;
@@ -69,6 +72,7 @@ html {
 
 body {
   min-height: 100%;
+  isolation: isolate;
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-helvetica-now), Arial, Helvetica, sans-serif;
@@ -86,4 +90,25 @@ body {
 ::selection {
   background: var(--selection-background);
   color: var(--foreground);
+}
+
+.grain {
+  background-color: var (--background);
+}
+
+.grain::after {
+  position: absolute;
+  inset: 0;
+  content: "";
+  background-image: url("/images/grain.gif");
+  background-repeat: repeat;
+  background-size: var(--grain-size);
+  mix-blend-mode: multiply;
+  opacity: var(--grain-opacity);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .grain::after {
+    background-image: none;
+  }
 }
