@@ -4,3 +4,11 @@ export type {
   LocalTimeProps,
   SiteHeaderProps,
 } from "./header";
+
+export type {
+  CaseCardMediaProps,
+  CaseCardProps,
+  CaseGalleryProps,
+  CaseStudy,
+  CaseStudyImage,
+} from "./case-study";
