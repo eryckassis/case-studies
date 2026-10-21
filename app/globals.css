@@ -1,14 +1,14 @@
 @import "tailwindcss";
 
 :root {
-  --background: #f8f8f8;
+  --background: #f8f6f2;
   --foreground: #111111;
   --selection-background: rgb(68 48 0 / 20%);
 
-  --layout-colums: 6;
+  --layout-columns: 6;
   --layout-gap: 8px;
   --page-gutter: 8px;
-  --header-hight: 40px;
+  --header-height: 40px;
 }
 
 @theme {

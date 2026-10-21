@@ -12,12 +12,12 @@ export function SiteHeader({ brand, menuHref, contactHref }: SiteHeaderProps) {
   return (
     <header
       className=" sticky top-0 z-100 flex h-(--header-height)
-        items-center px-(--page-gutter
+        items-center px-(--page-gutter)
         font-sans text-xs/none font-normal tracking-normal uppercase"
     >
       <div
         className="
-          grid w-full items-start gap-(--layout-gap
+          grid w-full items-start gap-(--layout-gap)
           grid-cols-[repeat(var(--layout-columns),minmax(0,1fr))]
         "
       >
