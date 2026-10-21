@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect, useRef } from "react";
 import Lenis from "lenis";
 import { cancelFrame, frame } from "framer-motion";
@@ -9,18 +11,38 @@ import { CaseCard } from "./CaseCard";
 export function CaseGallery({ items }: CaseGalleryProps) {
   const wrapperRef = useRef<HTMLElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
+  const sequenceRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const wrapper = wrapperRef.current;
     const content = contentRef.current;
+    const sequence = sequenceRef.current;
 
-    if (!wrapper || !content) {
+    if (!wrapper || !content || !sequence) {
       return;
     }
 
+    const scrollWrapper: HTMLElement = wrapper;
+    const scrollContent: HTMLDivElement = content;
+    const loopSequence: HTMLDivElement = sequence;
+
+    function updateLoopSize(scroll?: Lenis) {
+      const styles = window.getComputedStyle(scrollWrapper);
+      const horizontalPadding =
+        Number.parseFloat(styles.paddingLeft) +
+        Number.parseFloat(styles.paddingRight);
+      const viewportWidth = scrollWrapper.clientWidth - horizontalPadding;
+      const loopWidth = loopSequence.getBoundingClientRect().width;
+
+      scrollContent.style.width = `${loopWidth + viewportWidth}px`;
+      scroll?.resize();
+    }
+
+    updateLoopSize();
+
     const lenis = new Lenis({
-      wrapper,
-      content,
+      wrapper: scrollWrapper,
+      content: scrollContent,
       orientation: "horizontal",
       gestureOrientation: "both",
       infinite: true,
@@ -33,12 +55,19 @@ export function CaseGallery({ items }: CaseGalleryProps) {
       respectReducedMotion: true,
     });
 
+    const resizeObserver = new ResizeObserver(() => updateLoopSize(lenis));
+
+    resizeObserver.observe(scrollWrapper);
+    resizeObserver.observe(loopSequence);
+
     function update({ timestamp }: { timestamp: number }) {
       lenis.raf(timestamp);
     }
+
     frame.update(update, true);
 
     return () => {
+      resizeObserver.disconnect();
       cancelFrame(update);
       lenis.destroy();
     };
@@ -64,18 +93,35 @@ export function CaseGallery({ items }: CaseGalleryProps) {
 
       <div
         ref={contentRef}
-        className="
-          flex h-full w-max items-end
-          gap-(--case-gallery-gap)
-        "
+        className="relative h-full min-w-full overflow-hidden"
       >
-        {items.map((caseStudy, index) => (
-          <CaseCard
-            key={caseStudy.id}
-            caseStudy={caseStudy}
-            preload={index === 0}
-          />
-        ))}
+        <div className="absolute bottom-0 left-0 flex">
+          <div
+            ref={sequenceRef}
+            className="flex shrink-0 gap-(--case-gallery-gap) pr-(--case-gallery-gap)"
+          >
+            {items.map((caseStudy, index) => (
+              <CaseCard
+                key={caseStudy.id}
+                caseStudy={caseStudy}
+                preload={index === 0}
+              />
+            ))}
+          </div>
+
+          <div
+            aria-hidden="true"
+            inert
+            className="flex shrink-0 gap-(--case-gallery-gap) pr-(--case-gallery-gap)"
+          >
+            {items.map((caseStudy) => (
+              <CaseCard
+                key={`loop-${caseStudy.id}`}
+                caseStudy={caseStudy}
+              />
+            ))}
+          </div>
+        </div>
       </div>
     </section>
   );

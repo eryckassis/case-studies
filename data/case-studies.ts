@@ -15,7 +15,7 @@ export const caseStudies = [
     title: "Project Two",
     href: "/work/project-two",
     image: {
-      src: "/images/cases/project-two.jpg",
+      src: "/images/cases/project-one.jpg",
       alt: "Visual do projeto Project Two",
     },
   },
@@ -24,7 +24,7 @@ export const caseStudies = [
     title: "Project Three",
     href: "/work/project-three",
     image: {
-      src: "/images/cases/project-three.jpg",
+      src: "/images/cases/project-one.jpg",
       alt: "Visual do projeto Project Three",
     },
   },
@@ -33,7 +33,7 @@ export const caseStudies = [
     title: "Project Four",
     href: "/work/project-four",
     image: {
-      src: "/images/cases/project-four.jpg",
+      src: "/images/cases/project-one.jpg",
       alt: "Visual do projeto Project Four",
     },
   },
@@ -42,7 +42,7 @@ export const caseStudies = [
     title: "Project Five",
     href: "/work/project-five",
     image: {
-      src: "/images/cases/project-five.jpg",
+      src: "/images/cases/project-one.jpg",
       alt: "Visual do projeto Project Five",
     },
   },
@@ -51,7 +51,7 @@ export const caseStudies = [
     title: "Project Six",
     href: "/work/project-six",
     image: {
-      src: "/images/cases/project-six.jpg",
+      src: "/images/cases/project-one.jpg",
       alt: "Visual do projeto Project Six",
     },
   },
