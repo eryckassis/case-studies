@@ -9,6 +9,12 @@
   --layout-gap: 8px;
   --page-gutter: 8px;
   --header-height: 40px;
+
+  --case-gallery-height: calc(100dvh - var(--header-height));
+  --case-gallery-gap: var(--layout-gap);
+  --case-card-ratio: 396 / 496;
+  --case-card-width: calc((100vw - (var(--page-gutter) * 2)) * 0.83);
+  --case-title-gap: 8px;
 }
 
 @theme {
@@ -26,6 +32,8 @@
   :root {
     --page-gutter: 16px;
     --header-height: 56px;
+
+    --case-card-width: calc((100vw - (var(--page-gutter) * 2)) * 0.366);
   }
 }
 
@@ -33,6 +41,19 @@
   :root {
     --layout-columns: 14;
     --header-height: 84px;
+
+    --case-card-width: calc(
+      ((100vw - (var(--page-gutter) * 2)) * 0.2874) - var(--case-gallery-gap)
+    );
+    --case-title-gap: 16px;
+  }
+}
+
+@media (min-width: 120rem) {
+  :root {
+    --case-card-width: calc(
+      ((100vw - (var(--page-gutter) * 2)) * 0.287) - var(--case-gallery-gap)
+    );
   }
 }
 
