@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 
 import { Grain } from "@/components/grain";
+import { TransitionProvider } from "@/components/page-transition";
 
 import "lenis/dist/lenis.css";
 import "./globals.css";
@@ -28,7 +29,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" className={`${helveticaNow.variable} h-full`}>
       <body className="flex min-h-full flex-col antialiased">
-        {children}
+        <TransitionProvider>{children}</TransitionProvider>
         <Grain />
       </body>
     </html>
