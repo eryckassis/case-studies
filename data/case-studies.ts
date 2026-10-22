@@ -29,7 +29,7 @@ export const caseStudies = [
     description:
       "Project Two brings strategy, visual direction and digital design into a single experience. Replace this introductory text with the final project narrative when the case-study content is ready.",
     image: {
-      src: "/images/cases/project-one.jpg",
+      src: "/images/cases/Singulares.jpg",
       alt: "Visual do projeto Project Two",
     },
   },
@@ -45,7 +45,7 @@ export const caseStudies = [
     description:
       "Project Three brings strategy, visual direction and digital design into a single experience. Replace this introductory text with the final project narrative when the case-study content is ready.",
     image: {
-      src: "/images/cases/project-one.jpg",
+      src: "/images/cases/Celular.jpg",
       alt: "Visual do projeto Project Three",
     },
   },
