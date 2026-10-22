@@ -11,6 +11,7 @@ export function CaseCardMedia({
 }: CaseCardMediaProps) {
   return (
     <div
+      data-project-transition-media
       className="
         relative aspect-(--case-card-ratio)
         overflow-hidden

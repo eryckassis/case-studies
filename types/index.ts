@@ -6,6 +6,21 @@ export type {
 } from "./header";
 
 export type {
+  ProjectDetails,
+  ProjectHeroProps,
+  ProjectMediaProps,
+  ProjectMetaProps,
+  ProjectTitleProps,
+} from "./project";
+
+export type {
+  PageTransitionContextValue,
+  PageTransitionProps,
+  ProjectRevealProps,
+  ProjectTransitionTarget,
+} from "./page-transition";
+
+export type {
   CaseCardMediaProps,
   CaseCardProps,
   CaseGalleryProps,

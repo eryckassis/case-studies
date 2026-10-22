@@ -1,10 +1,11 @@
 import { SiteHeader } from "@/components/header";
 import { CaseGallery } from "@/components/case-gallery";
+import { PageTransition } from "@/components/page-transition";
 import { caseStudies } from "@/data/case-studies";
 
 export default function Home() {
   return (
-    <>
+    <PageTransition>
       <SiteHeader
         brand={["YOUR", "NAME"]}
         menuHref="#cases"
@@ -14,6 +15,6 @@ export default function Home() {
       <main id="cases" className="min-h-[calc(100svh-var(--header-height))]">
         <CaseGallery items={caseStudies} />
       </main>
-    </>
+    </PageTransition>
   );
 }
