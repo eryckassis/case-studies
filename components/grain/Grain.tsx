@@ -1,7 +1,7 @@
 export function Grain() {
   return (
     <>
-      <div
+      <span
         aria-hidden="true"
         className="
         grain pointer-events-none
