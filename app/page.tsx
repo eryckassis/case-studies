@@ -7,7 +7,7 @@ export default function Home() {
   return (
     <PageTransition>
       <SiteHeader
-        brand={["YOUR", "NAME"]}
+        brand={["ERYCK", "OASSIS"]}
         menuHref="#cases"
         contactHref="mailto:you@example.com"
       />
