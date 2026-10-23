@@ -43,7 +43,7 @@ export default async function ProjectPage({
   return (
     <PageTransition>
       <SiteHeader
-        brand={["YOUR", "NAME"]}
+        brand={["Eryck", "Oassis"]}
         menuHref="/#cases"
         contactHref="mailto:you@example.com"
       />
