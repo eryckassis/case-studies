@@ -23,6 +23,7 @@ export function ProjectMedia({ project }: ProjectMediaProps) {
       ) : project.image ? (
         <Image
           fill
+          unoptimized
           preload
           src={project.image.src}
           alt={project.image.alt}
