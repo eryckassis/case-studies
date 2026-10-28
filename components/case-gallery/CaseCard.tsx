@@ -126,8 +126,8 @@ export function CaseCard({
           className="will-change-transform"
         >
           <CaseCardMedia
-            src={caseStudy.image.src}
-            alt={caseStudy.image.alt}
+            image={caseStudy.image}
+            video={caseStudy.video}
             preload={preload}
           />
         </motion.div>
