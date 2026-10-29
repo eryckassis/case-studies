@@ -135,8 +135,16 @@ export function MenuProvider({
     const duration = reducedMotion ? 0 : DURATION;
 
     void Promise.all([
-      animate(source, { x: width * 0.0745, scale: 0.75, clipPath: PREVIEW_CLIP }, { duration, ease: EASE }),
-      animate(destination, { x: [width, width * 0.397], scale: [1, 0.75] }, { duration, ease: EASE }),
+      animate(
+        source,
+        { x: width * 0.0745, scale: 0.75, clipPath: PREVIEW_CLIP },
+        { duration, ease: EASE },
+      ),
+      animate(
+        destination,
+        { x: [width, width * 0.397], scale: [1, 0.75] },
+        { duration, ease: EASE },
+      ),
     ]).then(() => {
       busyRef.current = false;
     });
@@ -174,8 +182,16 @@ export function MenuProvider({
     busyRef.current = true;
     const duration = reducedMotion ? 0 : DURATION;
     await Promise.all([
-      animate(source, { x: 0, scale: 1, clipPath: FULL_CLIP }, { duration, ease: EASE }),
-      animate(destination, { x: window.innerWidth, scale: 1 }, { duration, ease: EASE }),
+      animate(
+        source,
+        { x: 0, scale: 1, clipPath: FULL_CLIP },
+        { duration, ease: EASE },
+      ),
+      animate(
+        destination,
+        { x: window.innerWidth, scale: 1 },
+        { duration, ease: EASE },
+      ),
     ]);
     cleanup();
   }
@@ -193,8 +209,16 @@ export function MenuProvider({
     busyRef.current = true;
     const duration = reducedMotion ? 0 : DURATION;
     await Promise.all([
-      animate(source, { x: -window.innerWidth, scale: 0.86 }, { duration, ease: EASE }),
-      animate(destination, { x: 0, scale: 1, clipPath: FULL_CLIP }, { duration, ease: EASE }),
+      animate(
+        source,
+        { x: -window.innerWidth, scale: 0.86 },
+        { duration, ease: EASE },
+      ),
+      animate(
+        destination,
+        { x: 0, scale: 1, clipPath: FULL_CLIP },
+        { duration, ease: EASE },
+      ),
     ]);
 
     pendingPageRef.current = page;
@@ -211,7 +235,7 @@ export function MenuProvider({
           event.preventDefault();
           void closeMenu();
         }}
-        className="fixed inset-0 m-0 h-dvh max-h-none w-screen max-w-none overflow-hidden border-0 bg-[#858471] p-0 text-foreground backdrop:bg-[#858471]"
+        className="fixed inset-0 m-0 h-dvh max-h-none w-screen max-w-none overflow-hidden border-0 p-0 text-foreground bg-[url(/images/background-faus.jpg)]"
       >
         {open && (
           <>
@@ -225,14 +249,6 @@ export function MenuProvider({
             >
               {destinationPreview}
             </div>
-
-            <button
-              type="button"
-              onClick={() => void closeMenu()}
-              className="absolute top-4 right-4 z-10 cursor-pointer text-xs leading-none uppercase focus-visible:outline-2 focus-visible:outline-offset-4"
-            >
-              Close
-            </button>
 
             <div className="absolute inset-0 z-5 flex items-center justify-center gap-[4.2vw]">
               <button
