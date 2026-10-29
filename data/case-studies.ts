@@ -97,4 +97,20 @@ export const caseStudies = [
       alt: "Visual do projeto Project Six",
     },
   },
+  {
+    id: "project-seven",
+    title: "Project Seven",
+    href: "/work/project-seven",
+    titleLines: ["project", "seven"],
+    client: "Client Name",
+    year: "2026",
+    category: "Art Direction",
+    services: ["Digital Design", "Development"],
+    description:
+      "Project Six brings strategy, visual direction and digital design into a single experience. Replace this introductory text with the final project narrative when the case-study content is ready.",
+    image: {
+      src: "/images/cases/project-08.png",
+      alt: "Visual do projeto Project Seven",
+    },
+  },
 ] as const satisfies readonly ProjectDetails[];
