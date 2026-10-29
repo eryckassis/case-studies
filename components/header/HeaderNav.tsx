@@ -1,11 +1,16 @@
+"use client";
+
 import Link from "next/link";
 
 import type { HeaderNavProps } from "@/types";
 
+import { useMenu } from "./MenuProvider";
+
 const focusClasses =
   "focus-visible:bg-foreground focus-visible:text-background focus-visible:outline-none";
 
-export function HeaderNav({ menuHref, contactHref }: HeaderNavProps) {
+export function HeaderNav({ contactHref }: HeaderNavProps) {
+  const { openMenu } = useMenu();
   return (
     <nav
       aria-label="Navegação principal"
@@ -13,12 +18,14 @@ export function HeaderNav({ menuHref, contactHref }: HeaderNavProps) {
     >
       <ul className="flex select-none flex-col items-start desktop:gap-0.5">
         <li>
-          <Link
-            href={menuHref}
+          <button
+            type="button"
+            onClick={openMenu}
+            aria-haspopup="dialog"
             className={`${focusClasses} desktop:block desktop:px-2.5 desktop:pt-2.5`}
           >
-            Menu
-          </Link>
+            MENU
+          </button>
         </li>
 
         <li className="hidden md:block">
