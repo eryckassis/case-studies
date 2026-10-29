@@ -7,11 +7,17 @@ export type CaseStudyImage = Readonly<{
   alt: string;
 }>;
 
+export type CaseStudyVideo = Readonly<{
+  src: string;
+  poster?: string;
+}>;
+
 export type CaseStudy = Readonly<{
   id: string;
   title: string;
   href: string;
-  image: CaseStudyImage;
+  image?: CaseStudyImage;
+  video?: CaseStudyVideo;
 }>;
 
 export type CaseGalleryProps = Readonly<{
@@ -30,8 +36,8 @@ export type AnimatedCaseTitleProps = Readonly<{
   controls: CaseTitleAnimationControls;
 }>;
 
-export type CaseCardMediaProps = Readonly<
-  CaseStudyImage & {
-    preload?: boolean;
-  }
->;
+export type CaseCardMediaProps = Readonly<{
+  image?: CaseStudyImage;
+  video?: CaseStudyVideo;
+  preload?: boolean;
+}>;

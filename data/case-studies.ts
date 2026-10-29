@@ -12,9 +12,9 @@ export const caseStudies = [
     services: ["Digital Design", "Development"],
     description:
       "Project One brings strategy, visual direction and digital design into a single experience. Replace this introductory text with the final project narrative when the case-study content is ready.",
-    image: {
-      src: "/images/cases/project-one.jpg",
-      alt: "Visual do projeto Project One",
+    video: {
+      src: "/videos/woman.mp4",
+      poster: "/images/cases/project-one.jpg",
     },
   },
   {
@@ -29,7 +29,7 @@ export const caseStudies = [
     description:
       "Project Two brings strategy, visual direction and digital design into a single experience. Replace this introductory text with the final project narrative when the case-study content is ready.",
     image: {
-      src: "/images/cases/Singulares.jpg",
+      src: "/images/cases/project-02.jpg",
       alt: "Visual do projeto Project Two",
     },
   },
@@ -45,7 +45,7 @@ export const caseStudies = [
     description:
       "Project Three brings strategy, visual direction and digital design into a single experience. Replace this introductory text with the final project narrative when the case-study content is ready.",
     image: {
-      src: "/images/cases/Celular.jpg",
+      src: "/images/cases/project-03.png",
       alt: "Visual do projeto Project Three",
     },
   },
@@ -61,7 +61,7 @@ export const caseStudies = [
     description:
       "Project Four brings strategy, visual direction and digital design into a single experience. Replace this introductory text with the final project narrative when the case-study content is ready.",
     image: {
-      src: "/images/cases/project-one.jpg",
+      src: "/images/cases/project-04.jpeg",
       alt: "Visual do projeto Project Four",
     },
   },
@@ -77,7 +77,7 @@ export const caseStudies = [
     description:
       "Project Five brings strategy, visual direction and digital design into a single experience. Replace this introductory text with the final project narrative when the case-study content is ready.",
     image: {
-      src: "/images/cases/project-one.jpg",
+      src: "/images/cases/project-06.png",
       alt: "Visual do projeto Project Five",
     },
   },
@@ -93,8 +93,24 @@ export const caseStudies = [
     description:
       "Project Six brings strategy, visual direction and digital design into a single experience. Replace this introductory text with the final project narrative when the case-study content is ready.",
     image: {
-      src: "/images/cases/project-one.jpg",
+      src: "/images/cases/project-07.png",
       alt: "Visual do projeto Project Six",
+    },
+  },
+  {
+    id: "project-seven",
+    title: "Project Seven",
+    href: "/work/project-seven",
+    titleLines: ["project", "seven"],
+    client: "Client Name",
+    year: "2026",
+    category: "Art Direction",
+    services: ["Digital Design", "Development"],
+    description:
+      "Project Six brings strategy, visual direction and digital design into a single experience. Replace this introductory text with the final project narrative when the case-study content is ready.",
+    image: {
+      src: "/images/cases/project-08.png",
+      alt: "Visual do projeto Project Seven",
     },
   },
 ] as const satisfies readonly ProjectDetails[];

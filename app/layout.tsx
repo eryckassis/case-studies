@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 
 import { Grain } from "@/components/grain";
+import { MenuProvider } from "@/components/header/MenuProvider";
+import { AboutPage } from "@/components/pages/AboutPage";
+import { CasesPage } from "@/components/pages/CasesPage";
 import { TransitionProvider } from "@/components/page-transition";
 
 import "lenis/dist/lenis.css";
@@ -29,7 +32,14 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" className={`${helveticaNow.variable} h-full`}>
       <body className="flex min-h-full flex-col antialiased">
-        <TransitionProvider>{children}</TransitionProvider>
+        <TransitionProvider>
+          <MenuProvider
+            casesPreview={<CasesPage />}
+            aboutPreview={<AboutPage />}
+          >
+            {children}
+          </MenuProvider>
+        </TransitionProvider>
         <Grain />
       </body>
     </html>
