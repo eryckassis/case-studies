@@ -41,3 +41,7 @@ export type ProjectMetaProps = Readonly<{
 export type ProjectMediaProps = Readonly<{
   project: ProjectDetails;
 }>;
+
+export type ProjectNextCaseProps = Readonly<{
+  project: ProjectDetails;
+}>;

@@ -10,6 +10,7 @@ export type {
   ProjectHeroProps,
   ProjectMediaProps,
   ProjectMetaProps,
+  ProjectNextCaseProps,
   ProjectSection,
   ProjectSectionProps,
   ProjectTitleProps,

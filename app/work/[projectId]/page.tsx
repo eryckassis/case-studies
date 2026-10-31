@@ -3,7 +3,11 @@ import { notFound } from "next/navigation";
 
 import { SiteHeader } from "@/components/header";
 import { PageTransition } from "@/components/page-transition";
-import { ProjectHero, ProjectSection } from "@/components/project";
+import {
+  ProjectHero,
+  ProjectNextCase,
+  ProjectSection,
+} from "@/components/project";
 import { caseStudies } from "@/data/case-studies";
 
 export const instant = false;
@@ -20,6 +24,14 @@ function getProject(projectId: string) {
   }
 
   return project;
+}
+
+function getNextProject(projectId: string) {
+  const currentIndex = caseStudies.findIndex(
+    (project) => project.id === projectId,
+  );
+
+  return caseStudies[(currentIndex + 1) % caseStudies.length];
 }
 
 export async function generateMetadata({
@@ -39,6 +51,7 @@ export default async function ProjectPage({
 }: PageProps<"/work/[projectId]">) {
   const { projectId } = await params;
   const project = getProject(projectId);
+  const nextProject = getNextProject(project.id);
 
   return (
     <PageTransition>
@@ -61,6 +74,8 @@ export default async function ProjectPage({
               />
             ))}
           </div>
+
+          <ProjectNextCase project={nextProject} />
         </div>
       </main>
     </PageTransition>

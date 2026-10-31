@@ -137,6 +137,7 @@ export function TransitionProvider({ children }: TransitionProviderProps) {
       projectId,
       media,
       title,
+      titleExit = "down",
     }: ProjectTransitionTarget) => {
       if (transitioningRef.current) {
         return;
@@ -163,6 +164,9 @@ export function TransitionProvider({ children }: TransitionProviderProps) {
       rememberStyle(media);
       const selectedTitle =
         title.querySelector<HTMLElement>(
+          "[data-page-transition-title-inner]",
+        ) ??
+        title.querySelector<HTMLElement>(
           "[data-case-transition-title-inner]",
         ) ?? title;
       rememberStyle(selectedTitle);
@@ -174,7 +178,7 @@ export function TransitionProvider({ children }: TransitionProviderProps) {
       try {
         animate(
           selectedTitle,
-          { y: "100%" },
+          { y: titleExit === "up" ? "-100%" : "100%" },
           { duration: CARD_STAGE_DURATION, ease: CARD_EASE },
         );
 
@@ -192,7 +196,8 @@ export function TransitionProvider({ children }: TransitionProviderProps) {
 
         destinationStyle = destination.getAttribute("style");
         const destinationRect = destination.getBoundingClientRect();
-        const cloneImage = mediaClone.querySelector<HTMLElement>("img");
+        const cloneMedia =
+          mediaClone.querySelector<HTMLElement>("img, video");
 
         animate(
           mediaClone,
@@ -205,9 +210,9 @@ export function TransitionProvider({ children }: TransitionProviderProps) {
           { duration: MEDIA_STAGE_DURATION, ease: MORPH_EASE },
         );
 
-        if (cloneImage) {
+        if (cloneMedia) {
           animate(
-            cloneImage,
+            cloneMedia,
             { scale: 1 },
             { duration: MEDIA_STAGE_DURATION, ease: MORPH_EASE },
           );
