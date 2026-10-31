@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 
 import { SiteHeader } from "@/components/header";
 import { PageTransition } from "@/components/page-transition";
-import { ProjectHero } from "@/components/project";
+import { ProjectHero, ProjectSection } from "@/components/project";
 import { caseStudies } from "@/data/case-studies";
 
 export const instant = false;
@@ -51,6 +51,16 @@ export default async function ProjectPage({
       <main className="project-page">
         <div className="project-container">
           <ProjectHero project={project} />
+
+          <div className="pt-[80px] desktop:pt-[230px] min-[89.875rem]:pt-[15.99vw]">
+            {project.sections.map((section, index) => (
+              <ProjectSection
+                key={section.id}
+                section={section}
+                index={index}
+              />
+            ))}
+          </div>
         </div>
       </main>
     </PageTransition>

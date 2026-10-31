@@ -10,6 +10,8 @@ export type {
   ProjectHeroProps,
   ProjectMediaProps,
   ProjectMetaProps,
+  ProjectSection,
+  ProjectSectionProps,
   ProjectTitleProps,
 } from "./project";
 
@@ -21,10 +23,10 @@ export type {
 } from "./page-transition";
 
 export type {
+  AnimatedCaseTitleProps,
   CaseCardMediaProps,
   CaseCardProps,
   CaseGalleryProps,
   CaseStudy,
   CaseStudyImage,
-  AnimatedCaseTitleProps,
 } from "./case-study";
