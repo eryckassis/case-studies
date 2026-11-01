@@ -14,6 +14,7 @@ export type ProjectTransitionTarget = Readonly<{
   projectId: string;
   media: HTMLElement;
   title: HTMLElement;
+  titleExit?: "up" | "down";
 }>;
 
 export type PageTransitionContextValue = Readonly<{

@@ -16,6 +16,16 @@ export const caseStudies = [
       src: "/videos/woman.mp4",
       poster: "/images/cases/project-one.jpg",
     },
+    sections: [
+      {
+        id: "campaign-design",
+        title: "Campaign Design",
+        image: {
+          src: "/images/cases/project-one.jpg",
+          alt: "Campaign design do Project One",
+        },
+      },
+    ],
   },
   {
     id: "project-two",
@@ -32,6 +42,16 @@ export const caseStudies = [
       src: "/images/cases/project-02.jpg",
       alt: "Visual do projeto Project Two",
     },
+    sections: [
+      {
+        id: "campaign-design",
+        title: "Campaign Design",
+        image: {
+          src: "/images/cases/project-02.jpg",
+          alt: "Campaign design do Project Two",
+        },
+      },
+    ],
   },
   {
     id: "project-three",
@@ -48,6 +68,16 @@ export const caseStudies = [
       src: "/images/cases/project-03.png",
       alt: "Visual do projeto Project Three",
     },
+    sections: [
+      {
+        id: "campaign-design",
+        title: "Campaign Design",
+        image: {
+          src: "/images/cases/project-03.png",
+          alt: "Campaign design do Project Three",
+        },
+      },
+    ],
   },
   {
     id: "project-four",
@@ -64,6 +94,16 @@ export const caseStudies = [
       src: "/images/cases/project-04.jpeg",
       alt: "Visual do projeto Project Four",
     },
+    sections: [
+      {
+        id: "campaign-design",
+        title: "Campaign Design",
+        image: {
+          src: "/images/cases/project-04.jpeg",
+          alt: "Campaign design do Project Four",
+        },
+      },
+    ],
   },
   {
     id: "project-five",
@@ -80,6 +120,16 @@ export const caseStudies = [
       src: "/images/cases/project-06.png",
       alt: "Visual do projeto Project Five",
     },
+    sections: [
+      {
+        id: "campaign-design",
+        title: "Campaign Design",
+        image: {
+          src: "/images/cases/project-06.png",
+          alt: "Campaign design do Project Five",
+        },
+      },
+    ],
   },
   {
     id: "project-six",
@@ -96,6 +146,16 @@ export const caseStudies = [
       src: "/images/cases/project-07.png",
       alt: "Visual do projeto Project Six",
     },
+    sections: [
+      {
+        id: "campaign-design",
+        title: "Campaign Design",
+        image: {
+          src: "/images/cases/project-07.png",
+          alt: "Campaign design do Project Six",
+        },
+      },
+    ],
   },
   {
     id: "project-seven",
@@ -107,10 +167,20 @@ export const caseStudies = [
     category: "Art Direction",
     services: ["Digital Design", "Development"],
     description:
-      "Project Six brings strategy, visual direction and digital design into a single experience. Replace this introductory text with the final project narrative when the case-study content is ready.",
+      "Project Seven brings strategy, visual direction and digital design into a single experience. Replace this introductory text with the final project narrative when the case-study content is ready.",
     image: {
       src: "/images/cases/project-08.png",
       alt: "Visual do projeto Project Seven",
     },
+    sections: [
+      {
+        id: "campaign-design",
+        title: "Campaign Design",
+        image: {
+          src: "/images/cases/project-08.png",
+          alt: "Campaign design do Project Seven",
+        },
+      },
+    ],
   },
 ] as const satisfies readonly ProjectDetails[];

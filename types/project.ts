@@ -1,4 +1,10 @@
-import type { CaseStudy } from "./case-study";
+import type { CaseStudy, CaseStudyImage } from "./case-study";
+
+export type ProjectSection = Readonly<{
+  id: string;
+  title: string;
+  image: CaseStudyImage;
+}>;
 
 export type ProjectDetails = CaseStudy &
   Readonly<{
@@ -8,7 +14,14 @@ export type ProjectDetails = CaseStudy &
     category: string;
     services: readonly string[];
     description: string;
+
+    sections: readonly [ProjectSection, ...ProjectSection[]];
   }>;
+
+export type ProjectSectionProps = Readonly<{
+  section: ProjectSection;
+  index: number;
+}>;
 
 export type ProjectHeroProps = Readonly<{
   project: ProjectDetails;
@@ -26,5 +39,9 @@ export type ProjectMetaProps = Readonly<{
 }>;
 
 export type ProjectMediaProps = Readonly<{
+  project: ProjectDetails;
+}>;
+
+export type ProjectNextCaseProps = Readonly<{
   project: ProjectDetails;
 }>;
