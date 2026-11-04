@@ -18,8 +18,8 @@ export function AboutPage() {
             id="about-title"
             className="max-w-full text-[clamp(48px,6.26vw,120px)] leading-none font-normal tracking-[-0.04em] desktop:w-[78%]"
           >
-            I build refined brands and experiences across digital and physical
-            spaces
+            Peintre surréaliste, je explore la place des femmes, l’égalité et
+            l’harmonie des couleurs
           </h1>
 
           <div className="mt-[clamp(100px,13vw,200px)] grid grid-cols-[repeat(var(--layout-columns),minmax(0,1fr))] gap-(--layout-gap)">
@@ -35,15 +35,19 @@ export function AboutPage() {
             </div>
 
             <div className="col-span-full pt-8 text-[clamp(22px,1.67vw,32px)] leading-[1.2] tracking-[-0.01em] md:col-start-4 md:col-span-3 md:pt-0 desktop:col-start-9 desktop:col-span-6 desktop:pr-[2vw]">
-              <h2 className="mb-7 font-normal uppercase">About me</h2>
+              <h2 className="mb-7 font-normal uppercase">À propos de moi</h2>
               <p>
-                I’m a designer and creative director working globally. With a
-                background in communication, I approach design beyond
-                aesthetics. Form follows meaning.
+                Bonjour, je me présente je suis Français j'ai 27 ans née dans la
+                Manche en Normandie. J'ai toujours étais attire par I'art depuis
+                tout petit. Je fais des peintures surréalistes qui représente
+                les femmes, je suis engagé dans I'égalité homme femme qui est
+                encore trop présente dans beaucoup de pays. Mes inspirations
+                sont principalement Henri Rousseau et Félix Labisse. Je cherche
+                dans mes tableaux créer une harmonie des couleurs.
               </p>
               <p className="mt-7.25">
-                My experience continues to shape how I think, collaborate and
-                create.
+                Chaque toile que je peins porte mon engagement pour l’égalité et
+                ma fascination pour les univers oniriques.
               </p>
             </div>
           </div>

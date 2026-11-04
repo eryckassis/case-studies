@@ -84,6 +84,7 @@ export function MenuProvider({
   const busyRef = useRef(false);
   const previousFocusRef = useRef<HTMLElement | null>(null);
   const previousOverflowRef = useRef("");
+  const [mobile, setMobile] = useState(false);
 
   const destinationPage: MenuPage = sourcePage === "cases" ? "about" : "cases";
   const destinationPreview =
@@ -112,6 +113,7 @@ export function MenuProvider({
     previousOverflowRef.current = document.documentElement.style.overflow;
     document.documentElement.style.overflow = "hidden";
     setSourcePage(pageFor(pathname));
+    setMobile(window.matchMedia("(max-width: 767px)").matches);
     setOpen(true);
   }, [pathname]);
 
@@ -134,6 +136,24 @@ export function MenuProvider({
     const width = window.innerWidth;
     const duration = reducedMotion ? 0 : DURATION;
 
+    if (mobile) {
+      const sourceCard = sourceHost.parentElement;
+      const destinationCard = destination.parentElement;
+      if (!sourceCard || !destinationCard) {
+        cleanup();
+        return;
+      }
+
+      void Promise.all([
+        animate(sourceCard, { scale: [1 / 0.6, 1] }, { duration, ease: EASE }),
+        animate(destinationCard, { x: [width, 0] }, { duration, ease: EASE }),
+      ]).then(() => {
+        busyRef.current = false;
+      });
+
+      return () => source.remove();
+    }
+
     void Promise.all([
       animate(
         source,
@@ -150,7 +170,7 @@ export function MenuProvider({
     });
 
     return () => source.remove();
-  }, [cleanup, open, reducedMotion]);
+  }, [cleanup, mobile, open, reducedMotion]);
 
   useEffect(() => {
     const pendingPage = pendingPageRef.current;
@@ -175,6 +195,11 @@ export function MenuProvider({
   }, [cleanup, open, pathname]);
 
   async function closeMenu() {
+    if (mobile) {
+      if (busyRef.current) return;
+      cleanup();
+      return;
+    }
     const source = sourceCloneRef.current;
     const destination = destinationRef.current;
     if (!source || !destination || busyRef.current) return;
@@ -197,6 +222,34 @@ export function MenuProvider({
   }
 
   async function selectPage(page: MenuPage) {
+    if (mobile) {
+      if (busyRef.current) return;
+      const card =
+        page === sourcePage
+          ? sourceHostRef.current?.parentElement
+          : destinationRef.current?.parentElement;
+      if (!card) return;
+
+      busyRef.current = true;
+      const rect = card.getBoundingClientRect();
+      await animate(
+        card,
+        {
+          x: window.innerWidth / 2 - (rect.left + rect.width / 2),
+          y: window.innerHeight / 2 - (rect.top + rect.height / 2),
+          scale: 1 / 0.6,
+        },
+        { duration: reducedMotion ? 0 : DURATION, ease: EASE },
+      );
+
+      if (page === sourcePage) {
+        cleanup();
+        return;
+      }
+      pendingPageRef.current = page;
+      router.push(hrefFor(page));
+      return;
+    }
     const source = sourceCloneRef.current;
     const destination = destinationRef.current;
     if (!source || !destination || busyRef.current) return;
@@ -237,35 +290,77 @@ export function MenuProvider({
         }}
         className="fixed inset-0 m-0 h-dvh max-h-none w-screen max-w-none overflow-hidden border-0 p-0 text-foreground bg-[url(/images/background-faus.jpg)]"
       >
-        {open && (
-          <>
-            <div ref={sourceHostRef} />
+        {open &&
+          (mobile ? (
             <div
-              ref={destinationRef}
-              inert
-              aria-hidden="true"
-              className="pointer-events-none fixed inset-0 z-2 h-dvh w-screen origin-center overflow-hidden"
-              style={{ clipPath: PREVIEW_CLIP }}
+              className="
+        flex h-full snap-x snap-mandatory items-center gap-[7.5vw]
+        overflow-x-auto px-[20vw] [scrollbar-width:none]
+        [&::-webkit-scrollbar]:hidden
+      "
             >
-              {destinationPreview}
-            </div>
+              <div className="relative h-[60dvh] w-[60vw] shrink-0 snap-center overflow-hidden">
+                <div
+                  ref={sourceHostRef}
+                  aria-hidden="true"
+                  className="pointer-events-none absolute left-0 top-0 h-dvh w-screen origin-top-left scale-[0.6]"
+                />
 
-            <div className="absolute inset-0 z-5 flex items-center justify-center gap-[4.2vw]">
-              <button
-                type="button"
-                aria-label={`Abrir ${sourcePage}`}
-                onClick={() => void selectPage(sourcePage)}
-                className="h-[75dvh] w-[28.05vw] cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-4"
-              />
-              <button
-                type="button"
-                aria-label={`Abrir ${destinationPage}`}
-                onClick={() => void selectPage(destinationPage)}
-                className="h-[75dvh] w-[28.05vw] cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-4"
-              />
+                <button
+                  type="button"
+                  aria-label={`Abrir ${sourcePage}`}
+                  onClick={() => void selectPage(sourcePage)}
+                  className="absolute inset-0 h-full w-full focus-visible:outline-2 focus-visible:outline-offset-[-4px]"
+                />
+              </div>
+
+              <div className="relative h-[60dvh] w-[60vw] shrink-0 snap-center overflow-hidden">
+                <div
+                  ref={destinationRef}
+                  inert
+                  aria-hidden="true"
+                  className="pointer-events-none absolute left-0 top-0 h-dvh w-screen origin-top-left scale-[0.6] overflow-hidden"
+                >
+                  {destinationPreview}
+                </div>
+
+                <button
+                  type="button"
+                  aria-label={`Abrir ${destinationPage}`}
+                  onClick={() => void selectPage(destinationPage)}
+                  className="absolute inset-0 h-full w-full focus-visible:outline-2 focus-visible:outline-offset-[-4px]"
+                />
+              </div>
             </div>
-          </>
-        )}
+          ) : (
+            <>
+              <div ref={sourceHostRef} />
+              <div
+                ref={destinationRef}
+                inert
+                aria-hidden="true"
+                className="pointer-events-none fixed inset-0 z-2 h-dvh w-screen origin-center overflow-hidden"
+                style={{ clipPath: PREVIEW_CLIP }}
+              >
+                {destinationPreview}
+              </div>
+
+              <div className="absolute inset-0 z-5 flex items-center justify-center gap-[4.2vw]">
+                <button
+                  type="button"
+                  aria-label={`Abrir ${sourcePage}`}
+                  onClick={() => void selectPage(sourcePage)}
+                  className="h-[75dvh] w-[28.05vw] cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-4"
+                />
+                <button
+                  type="button"
+                  aria-label={`Abrir ${destinationPage}`}
+                  onClick={() => void selectPage(destinationPage)}
+                  className="h-[75dvh] w-[28.05vw] cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-4"
+                />
+              </div>
+            </>
+          ))}
       </dialog>
     </MenuContext.Provider>
   );

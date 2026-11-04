@@ -162,25 +162,26 @@ export function TransitionProvider({ children }: TransitionProviderProps) {
       }
 
       rememberStyle(media);
-      const selectedTitle =
-        title.querySelector<HTMLElement>(
-          "[data-page-transition-title-inner]",
-        ) ??
-        title.querySelector<HTMLElement>(
-          "[data-case-transition-title-inner]",
-        ) ?? title;
-      rememberStyle(selectedTitle);
+      const selectedTitles = Array.from(
+        title.querySelectorAll<HTMLElement>(
+          "[data-page-transition-title-inner], [data-case-transition-title-inner]",
+        ),
+      );
+      if (!selectedTitles.length) selectedTitles.push(title);
+      selectedTitles.forEach(rememberStyle);
       media.style.visibility = "hidden";
 
       let destination: HTMLElement | null = null;
       let destinationStyle: string | null = null;
 
       try {
-        animate(
-          selectedTitle,
-          { y: titleExit === "up" ? "-100%" : "100%" },
-          { duration: CARD_STAGE_DURATION, ease: CARD_EASE },
-        );
+        selectedTitles.forEach((element) => {
+          animate(
+            element,
+            { y: titleExit === "up" ? "-100%" : "100%" },
+            { duration: CARD_STAGE_DURATION, ease: CARD_EASE },
+          );
+        });
 
         await wait(CARD_STAGE_DURATION);
 
