@@ -3,9 +3,13 @@
 import type { MouseEvent } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { motion, useReducedMotion } from "framer-motion";
 
 import { usePageTransition } from "@/components/page-transition";
 import type { ProjectNextCaseProps } from "@/types";
+
+const MotionLink = motion.create(Link);
+const textEase = [0.16, 1, 0.3, 1] as const;
 
 function isModifiedClick(event: MouseEvent<HTMLAnchorElement>) {
   return (
@@ -20,6 +24,7 @@ function isModifiedClick(event: MouseEvent<HTMLAnchorElement>) {
 
 export function ProjectNextCase({ project }: ProjectNextCaseProps) {
   const { openProject } = usePageTransition();
+  const reducedMotion = useReducedMotion();
 
   function handleClick(event: MouseEvent<HTMLAnchorElement>) {
     if (isModifiedClick(event)) {
@@ -27,7 +32,7 @@ export function ProjectNextCase({ project }: ProjectNextCaseProps) {
     }
 
     const title = event.currentTarget.querySelector<HTMLElement>(
-      "[data-next-case-title]",
+      "[data-next-case-heading]",
     );
     const media = event.currentTarget.querySelector<HTMLElement>(
       "[data-next-case-media]",
@@ -60,9 +65,12 @@ export function ProjectNextCase({ project }: ProjectNextCaseProps) {
         min-[89.875rem]:pb-[1.11vw]
       "
     >
-      <Link
+      <MotionLink
         href={project.href}
         onClick={handleClick}
+        initial="rest"
+        whileHover={reducedMotion ? undefined : "hover"}
+        whileFocus={reducedMotion ? undefined : "hover"}
         className="
           grid w-full grid-cols-6
           gap-(--layout-gap)
@@ -82,6 +90,7 @@ export function ProjectNextCase({ project }: ProjectNextCaseProps) {
         >
           <h2
             id={titleId}
+            data-next-case-heading
             className="
               font-sans
               text-[length:var(--project-title-size)]
@@ -93,8 +102,11 @@ export function ProjectNextCase({ project }: ProjectNextCaseProps) {
               min-[89.875rem]:text-[6.26vw]
             "
           >
-            <span
+            <motion.span
               data-next-case-title
+              initial={reducedMotion ? false : "hidden"}
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.2 }}
               className="
                 relative block h-[1.24em]
                 overflow-hidden
@@ -107,33 +119,59 @@ export function ProjectNextCase({ project }: ProjectNextCaseProps) {
                   will-change-transform
                 "
               >
-                <span className="block h-full">next case</span>
-
-                <span
-                  aria-hidden="true"
-                  className="absolute top-full left-0 block h-full"
+                <motion.span
+                  variants={{ hidden: { y: "100%" }, visible: { y: "0%" } }}
+                  transition={{ duration: 1, ease: textEase }}
+                  className="relative block h-full"
                 >
-                  next case
-                </span>
+                  <motion.span
+                    variants={{ rest: { y: "0%" }, hover: { y: "-100%" } }}
+                    transition={{ duration: 0.65, ease: textEase }}
+                    className="relative block h-full will-change-transform"
+                  >
+                    <span className="block h-full">next case</span>
+                    <span
+                      aria-hidden="true"
+                      className="absolute top-full left-0 block h-full"
+                    >
+                      next case
+                    </span>
+                  </motion.span>
+                </motion.span>
               </span>
-            </span>
+            </motion.span>
 
             <span
               aria-label={project.title}
               className="
-                mt-[-16px] block overflow-hidden
+                mt-[-16px] block
                 desktop:mt-[-32px]
                 min-[89.875rem]:mt-[-2.23vw]
               "
             >
               {project.titleLines.map((line, index) => (
-                <span
+                <motion.span
                   key={`${line}-${index}`}
                   aria-hidden="true"
-                  className="block"
+                  initial={reducedMotion ? false : "hidden"}
+                  whileInView="visible"
+                  viewport={{ once: true, amount: 0.2 }}
+                  className="block overflow-hidden"
                 >
-                  {line}
-                </span>
+                  <span data-page-transition-title-inner className="block">
+                    <motion.span
+                      variants={{ hidden: { y: "100%" }, visible: { y: "0%" } }}
+                      transition={{
+                        duration: 1,
+                        delay: reducedMotion ? 0 : 0.08 * (index + 1),
+                        ease: textEase,
+                      }}
+                      className="block will-change-transform"
+                    >
+                      {line}
+                    </motion.span>
+                  </span>
+                </motion.span>
               ))}
             </span>
           </h2>
@@ -198,9 +236,7 @@ export function ProjectNextCase({ project }: ProjectNextCaseProps) {
                 loop
                 playsInline
                 preload="metadata"
-                aria-label={
-                  project.image?.alt ?? `${project.title} — vídeo`
-                }
+                aria-label={project.image?.alt ?? `${project.title} — vídeo`}
                 className="
                   pointer-events-none
                   absolute inset-0
@@ -230,7 +266,7 @@ export function ProjectNextCase({ project }: ProjectNextCaseProps) {
             ) : null}
           </div>
         </div>
-      </Link>
+      </MotionLink>
     </section>
   );
 }
