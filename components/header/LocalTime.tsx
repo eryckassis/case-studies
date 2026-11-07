@@ -27,7 +27,7 @@ function readLocalTime(): LocalTimeValue {
   };
 }
 
-export function LocalTime({ label = "Local time" }: LocalTimeProps) {
+export function LocalTime({ label = "Heure locale" }: LocalTimeProps) {
   const [time, setTime] = useState<LocalTimeValue>(EMPTY_TIME);
 
   useEffect(() => {

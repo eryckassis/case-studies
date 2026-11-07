@@ -6,6 +6,7 @@ import { MenuProvider } from "@/components/header/MenuProvider";
 import { AboutPage } from "@/components/pages/AboutPage";
 import { CasesPage } from "@/components/pages/CasesPage";
 import { TransitionProvider } from "@/components/page-transition";
+import { ThemeProvider } from "@/components/theme/ThemeProvider";
 
 import "lenis/dist/lenis.css";
 import "./globals.css";
@@ -32,15 +33,17 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" className={`${helveticaNow.variable} h-full`}>
       <body className="flex min-h-full flex-col antialiased">
-        <TransitionProvider>
-          <MenuProvider
-            casesPreview={<CasesPage />}
-            aboutPreview={<AboutPage />}
-          >
-            {children}
-          </MenuProvider>
-        </TransitionProvider>
-        <Grain />
+        <ThemeProvider>
+          <TransitionProvider>
+            <MenuProvider
+              casesPreview={<CasesPage />}
+              aboutPreview={<AboutPage />}
+            >
+              {children}
+            </MenuProvider>
+          </TransitionProvider>
+          <Grain />
+        </ThemeProvider>
       </body>
     </html>
   );
