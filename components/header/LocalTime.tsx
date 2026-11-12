@@ -1,56 +1,45 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import type { LocalTimeProps } from "@/types";
-
-type LocalTimeValue = {
-  display: string;
-  iso?: string;
-};
-
-const EMPTY_TIME: LocalTimeValue = {
-  display: "--:--",
-};
-
-const formatter = new Intl.DateTimeFormat("en-GB", {
-  hour: "2-digit",
-  minute: "2-digit",
-  hour12: false,
-});
-
-function readLocalTime(): LocalTimeValue {
-  const display = formatter.format(new Date());
-
-  return {
-    display,
-    iso: display,
-  };
-}
+import { useTheme } from "@/components/theme/ThemeProvider";
 
 export function LocalTime({ label = "Heure locale" }: LocalTimeProps) {
-  const [time, setTime] = useState<LocalTimeValue>(EMPTY_TIME);
+  const { minutes, isTimeTravel, resetTime } = useTheme();
 
-  useEffect(() => {
-    const update = () => setTime(readLocalTime());
+  const hours =
+    minutes === null ? "--" : String(Math.floor(minutes / 60)).padStart(2, "0");
 
-    update();
+  const remainder =
+    minutes === null ? "--" : String(minutes % 60).padStart(2, "0");
 
-    const intervalId = window.setInterval(update, 60_000);
-
-    return () => window.clearInterval(intervalId);
-  }, []);
-
-  const [hours, minutes] = time.display.split(":");
+  const display = `${hours}:${remainder}`;
 
   return (
     <div className="hidden w-[100px] md:block">
-      <span className="block">{label}</span>
+      <div className="flex items-center gap-2">
+        <span>{isTimeTravel ? "Voyage temporel" : label}</span>
 
-      <time dateTime={time.iso} className="block desktop:mt-0.5">
+        {isTimeTravel ? (
+          <button
+            type="button"
+            onClick={resetTime}
+            aria-label="Revenir à l’heure locale"
+            className="cursor-pointer focus-visible:outline-1
+              focus-visible:outline-offset-2 focus-visible:outline-foreground"
+          >
+            ×
+          </button>
+        ) : null}
+      </div>
+
+      <time
+        dateTime={minutes === null ? undefined : display}
+        className="block desktop:mt-0.5"
+      >
         {hours}
         <span aria-hidden="true">&nbsp;&nbsp;&nbsp;. </span>
         <span className="sr-only">:</span>
-        {minutes}
+        {remainder}
       </time>
     </div>
   );
